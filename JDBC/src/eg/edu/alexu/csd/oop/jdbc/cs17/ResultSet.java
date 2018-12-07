@@ -95,7 +95,7 @@ public class ResultSet implements Resultset {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
 			throw new SQLException();
 		}
-		return (int) t[currentRow][columnIndex];
+		return (int) t[currentRow - 1][columnIndex - 1];
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ResultSet implements Resultset {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
 			throw new SQLException();
 		}
-		return (long) t[currentRow][findColumn(columnLabel)];
+		return (long) t[currentRow - 1][findColumn(columnLabel) - 1];
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class ResultSet implements Resultset {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
 			throw new SQLException();
 		}
-		return t[currentRow][columnIndex];
+		return t[currentRow - 1][columnIndex - 1];
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class ResultSet implements Resultset {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
 			throw new SQLException();
 		}
-		return t[currentRow][columnIndex].toString();
+		return t[currentRow - 1][columnIndex - 1].toString();
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class ResultSet implements Resultset {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
 			throw new SQLException();
 		}
-		return t[currentRow][findColumn(columnLabel)].toString();
+		return t[currentRow - 1][findColumn(columnLabel) - 1].toString();
 	}
 
 	@Override
