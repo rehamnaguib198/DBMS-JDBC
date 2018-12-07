@@ -9,6 +9,10 @@ import eg.edu.alexu.csd.oop.jdbc.Statement;
 
 public class SQLStatement implements Statement{
 	ArrayList<String> commands=new ArrayList<>();
+	Connection connection;
+	public SQLStatement(Connection con) {
+		this.connection=con;
+	}
 
 	@Override
 	public void addBatch(String sql) throws SQLException {

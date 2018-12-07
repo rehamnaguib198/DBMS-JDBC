@@ -6,20 +6,16 @@ import eg.edu.alexu.csd.oop.jdbc.Connection;
 import eg.edu.alexu.csd.oop.jdbc.Statement;
 
 public class SQLConnection implements Connection {
-	String userName;
 	String path;
-	String password;
 
-	public SQLConnection(String path, String user, String pass) {
+	public SQLConnection(String path) {
 		this.path = path;
-		this.userName = user;
-		this.password = pass;
 	}
 
 	@Override
 	public Statement createStatement() throws SQLException {
 		// TODO Auto-generated method stub
-		Statement statement=new SQLStatement();
+		Statement statement=new SQLStatement(this);
 		return statement;
 	}
 

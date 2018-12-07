@@ -11,7 +11,7 @@ public class SQLDriver implements Driver {
 
 	@Override
 	public boolean acceptsURL(String url) throws SQLException {
-       if(url.contains("jdbc:mysql://localhost:")) { 
+       if(url.equals("jdbc:xmldb://localhost:")) { 
     	   return true;
        }
        else {
@@ -25,9 +25,8 @@ public class SQLDriver implements Driver {
 		if(!acceptsURL(url)) {
 			return null;
 		} else {
-			String userName=info.getProperty("userName");
-			String password=info.getProperty("password");
-			Connection con=new SQLConnection(url,userName,password);
+			String path=info.getProperty("path");
+			Connection con=new SQLConnection(path);
 			return con;
 		}
 	}
