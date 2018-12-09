@@ -42,6 +42,6 @@ public interface Driver {
 	 * be necessary to iterate though several calls to the getPropertyInfo method.
 	 * 
 	 **/
-	 public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException;
+	 //public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException;
 
 }
