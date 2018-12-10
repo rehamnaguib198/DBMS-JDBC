@@ -92,7 +92,7 @@ public class SQLConnection implements Connection {
 	@Override
 	public Statement createStatement() throws SQLException {
 		if (!closed) {
-			dbms.createDatabase(path, false);
+			//dbms.createDatabase(path, false);
 			Statement statement = new SQLStatement(this, dbms);
 			log.getLogger().info("Statement created successfully!");
 			return statement;

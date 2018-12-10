@@ -95,9 +95,16 @@ public class SQLStatement implements Statement{
 			throw new SQLException();
 		}
 		count = 0;
-		String REGEX = "(\\bcreate\\b)|(\\bdrop\\b)";
+		String REGEX = "\\bcreate database\\b+( \\w+)";
 		Pattern pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(sql);
+		if (matcher.find() && matcher.start() == 0 && matcher.end() == sql.length()) {
+			String name = sql.substring(16, sql.length());
+			dbms.createDatabase("sample" + System.getProperty("file.separator") + name, false);
+		}
+		REGEX = "(\\bcreate\\b)|(\\bdrop\\b)";
+		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
+		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
 			boolean b = dbms.executeStructureQuery(sql);
 			log.getLogger().info("Query is successfully executed!");
