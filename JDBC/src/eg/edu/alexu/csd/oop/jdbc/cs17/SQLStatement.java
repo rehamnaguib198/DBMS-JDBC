@@ -24,10 +24,10 @@ public class SQLStatement implements Statement{
 	private int timeOut;
 	private Log log=new Log();
 
-	public SQLStatement(Connection con) {
+	public SQLStatement(Connection con, Database dbms) {
 		this.connection=con;
 		this.closed = false;
-		this.dbms = new DBMS();
+		this.dbms = dbms;
 	}
 
 	@Override
@@ -95,31 +95,40 @@ public class SQLStatement implements Statement{
 			throw new SQLException();
 		}
 		count = 0;
-		String REGEX = "(\\bcreate\\b)||(\\bdrop\\b)";
+		String REGEX = "(\\bcreate\\b)|(\\bdrop\\b)";
 		Pattern pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(sql);
 		if(matcher.find()) {
-			dbms.executeStructureQuery(sql);
+			boolean b = dbms.executeStructureQuery(sql);
 			log.getLogger().info("Query is successfully executed!");
-			return false;
+			return b;
 		}
 		REGEX = "\\bselect\\b";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
 			Object[][] table = dbms.executeQuery(sql);
-			ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable());
-			result = new SQLResultSet(this, metaData, table);
-			log.getLogger().info("Query is successfully executed!");
-			return true;
+			if (table != null && table.length != 0) {
+				ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
+				result = new SQLResultSet(this, metaData, table);
+				log.getLogger().info("Query is successfully executed!");
+				return true;
+			} else if (table.length == 0) {
+				log.getLogger().info("Query is successfully executed!");
+			} else {
+				log.getLogger().warning("Null table!");
+			}
 		}
-		REGEX = "(\\bupdate\\b)||(\\binsert\\b)||(\\bdelete\\b)";
+		REGEX = "(\\bupdate\\b)|(\\binsert\\b)|(\\bdelete\\b)";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
 			count = dbms.executeUpdateQuery(sql);
+			if (count > 0) {
+				log.getLogger().info("Query is successfully executed!");
+				return true;
+			}
 			log.getLogger().info("Query is successfully executed!");
-			return false;
 		}
 		return false;
 	}
@@ -166,9 +175,14 @@ public class SQLStatement implements Statement{
 			throw new SQLException();
 		}
 		Object[][] table = dbms.executeQuery(sql);
-		ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable());
-		ResultSet result = new SQLResultSet(this, metaData, table);
-		log.getLogger().info("Query is successfully executed!");
+		if (table != null) {
+			ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
+			result = new SQLResultSet(this, metaData, table);
+			log.getLogger().info("Query is successfully executed!");
+			return result;
+		} else {
+			log.getLogger().warning("Null table!");
+		}
 		return null;
 	}
 
@@ -268,7 +282,7 @@ public class SQLStatement implements Statement{
 	@Override
 	public ResultSet getResultSet() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 	@Override

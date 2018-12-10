@@ -88,7 +88,7 @@ public class DBMS implements Database {
 				current = CurrentDatabase.getInstance();
 				current.setPath(f.getAbsolutePath());
 				dbCreated = true;
-				System.out.println("Current database is: "+db);
+				System.out.println("Current database is: " + db);
 				return true;
 			}
 		} else if (dropdb.interpreter(query)) {
@@ -103,8 +103,8 @@ public class DBMS implements Database {
 				return true;
 			}
 		} else if (createTable.interpreter(query)) {
-			if(!dbCreated) {
-				//return false;
+			if (!dbCreated) {
+				// return false;
 				System.out.println("ERROR!!");
 				throw new SQLException();
 			}
@@ -168,7 +168,7 @@ public class DBMS implements Database {
 		visitor = new ExecuteVisitor();
 		visitor.setQuery(query);
 		select.accept(visitor);
-		if(!visitor.isExecuted()) {
+		if (!visitor.isExecuted()) {
 			System.out.println("ERROR!!");
 			throw new SQLException();
 		}
@@ -189,7 +189,7 @@ public class DBMS implements Database {
 				throw new SQLException();
 			}
 			return visitor.getChangedRows();
-			
+
 		} else if (update.interpreter(query)) {
 			visitor = new ExecuteVisitor();
 			visitor.setQuery(query);
@@ -205,17 +205,21 @@ public class DBMS implements Database {
 			if (visitor.getChangedRows() == -1) {
 				throw new SQLException();
 			}
-			//cache.addcommand(visitor.getTable(), visitor.getMap());
+			// cache.addcommand(visitor.getTable(), visitor.getMap());
 			return visitor.getChangedRows();
 		} else {
 			throw new SQLException();
 		}
 	}
-	public ArrayList<String> selectedColumns(){
-		ArrayList<String> columns=visitor.columns;
+
+	@Override
+	public ArrayList<String> selectedColumns() {
+		ArrayList<String> columns = visitor.columns;
 		return columns;
 	}
-	public HashMap<String,String> getXSDMap(String table){
-	return files.readXSD(table);	
+
+	@Override
+	public HashMap<String, String> getXSDMap(String table) {
+		return files.readXSD(table);
 	}
 }

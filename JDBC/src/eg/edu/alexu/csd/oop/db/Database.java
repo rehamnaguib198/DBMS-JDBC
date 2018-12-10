@@ -1,5 +1,8 @@
 package eg.edu.alexu.csd.oop.db;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public interface Database {
 	/**
 	 * Create database with the given name, or use it if exists. This method
@@ -51,4 +54,8 @@ public interface Database {
 	 */
 	public int executeUpdateQuery(String query) throws java.sql.SQLException;
 	public String getTable();
+
+	public ArrayList<String> selectedColumns();
+
+	public HashMap<String, String> getXSDMap(String table);
 }

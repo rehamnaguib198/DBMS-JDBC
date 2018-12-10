@@ -16,7 +16,7 @@ public class SQLDriver implements Driver {
 
 	@Override
 	public boolean acceptsURL(String url) throws SQLException {
-		 if(url.equals("jdbc:xmldb://localhost:")) { 
+		 if(url.equals("jdbc:xmldb://localhost")) { 
 			 log.getLogger().info("Url accepted");
 	    	   return true;
 	       }
@@ -32,7 +32,8 @@ public class SQLDriver implements Driver {
 			log.getLogger().warning("Invalid url");
 			return null;
 		} else {
-			String path=info.getProperty("path");
+			File f = (File) info.get("path");
+			String path = f.getAbsolutePath();
 			Connection con=new SQLConnection(path);
 			log.getLogger().info("Connection returned successfully!");
 			return con;
@@ -41,31 +42,26 @@ public class SQLDriver implements Driver {
 
 	@Override
 	public int getMajorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public int getMinorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean jdbcCompliant() {
-		// TODO Auto-generated method stub
-		return false;
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

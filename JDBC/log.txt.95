@@ -1,0 +1,24 @@
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLConnection createStatement
+INFO: Statement created successfully!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement execute
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement execute
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement close
+INFO: Statement is closed successfully!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLConnection createStatement
+INFO: Statement created successfully!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement execute
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement executeUpdate
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement executeUpdate
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement executeUpdate
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement executeUpdate
+INFO: Query is successfully executed!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLStatement close
+INFO: Statement is closed successfully!
+Dec 10, 2018 2:52:50 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLConnection close
+INFO: Connection is closed successfully!

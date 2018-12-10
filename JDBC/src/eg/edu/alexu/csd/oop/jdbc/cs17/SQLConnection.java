@@ -19,12 +19,18 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs11.DBMS;
+
 public class SQLConnection implements Connection {
-	private Log log=new Log();
-	String path;
-    private boolean closed=false;
+	private Log log = new Log();
+	private String path;
+	private boolean closed = false;
+	private Database dbms;
+
 	public SQLConnection(String path) {
 		this.path = path;
+		dbms = new DBMS();
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class SQLConnection implements Connection {
 	@Override
 	public void close() throws SQLException {
 		log.getLogger().info("Connection is closed successfully!");
-		closed=true;
+		closed = true;
 	}
 
 	@Override
@@ -85,14 +91,14 @@ public class SQLConnection implements Connection {
 
 	@Override
 	public Statement createStatement() throws SQLException {
-		if(!closed) {
-		Statement statement = new SQLStatement(this);
-		log.getLogger().info("Statement created successfully!");
-		return statement;
-		}
-		else {
-		log.getLogger().warning("Can not used closed connection");
-		throw new SQLException();
+		if (!closed) {
+			dbms.createDatabase(path, false);
+			Statement statement = new SQLStatement(this, dbms);
+			log.getLogger().info("Statement created successfully!");
+			return statement;
+		} else {
+			log.getLogger().warning("Can not used closed connection");
+			throw new SQLException();
 		}
 	}
 
