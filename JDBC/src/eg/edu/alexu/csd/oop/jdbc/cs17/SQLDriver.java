@@ -11,13 +11,17 @@ import java.util.logging.Logger;
 
 
 public class SQLDriver implements Driver {
+	private Log log=new Log();
+
 
 	@Override
 	public boolean acceptsURL(String url) throws SQLException {
 		 if(url.equals("jdbc:xmldb://localhost:")) { 
+			 log.getLogger().info("Url accepted");
 	    	   return true;
 	       }
 	       else {
+	    	   log.getLogger().warning("Invalid url");
 	    	   return false;
 	       }
 	}
@@ -25,10 +29,12 @@ public class SQLDriver implements Driver {
 	@Override
 	public java.sql.Connection connect(String url, Properties info) throws SQLException {
 		if(!acceptsURL(url)) {
+			log.getLogger().warning("Invalid url");
 			return null;
 		} else {
 			String path=info.getProperty("path");
 			Connection con=new SQLConnection(path);
+			log.getLogger().info("Connection returned successfully!");
 			return con;
 		}
 	}

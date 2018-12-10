@@ -22,6 +22,7 @@ public class SQLStatement implements Statement{
 	private int count;
 	private boolean closed;
 	private int timeOut;
+	private Log log=new Log();
 
 	public SQLStatement(Connection con) {
 		this.connection=con;
@@ -44,9 +45,11 @@ public class SQLStatement implements Statement{
 	@Override
 	public void addBatch(String sql) throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		commands.add(sql);	
+		log.getLogger().info("Batch added successfully!");
 	}
 
 	@Override
@@ -58,9 +61,11 @@ public class SQLStatement implements Statement{
 	@Override
 	public void clearBatch() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		commands.clear();	
+		log.getLogger().info("Batch cleared successfully!");
 	}
 
 	@Override
@@ -72,7 +77,7 @@ public class SQLStatement implements Statement{
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
-		
+		log.getLogger().info("Statement is closed successfully!");
 		closed = true;
 	}
 
@@ -86,6 +91,7 @@ public class SQLStatement implements Statement{
 	public boolean execute(String sql) throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		count = 0;
@@ -94,6 +100,7 @@ public class SQLStatement implements Statement{
 		Matcher matcher = pattern.matcher(sql);
 		if(matcher.find()) {
 			dbms.executeStructureQuery(sql);
+			log.getLogger().info("Query is successfully executed!");
 			return false;
 		}
 		REGEX = "\\bselect\\b";
@@ -103,6 +110,7 @@ public class SQLStatement implements Statement{
 			Object[][] table = dbms.executeQuery(sql);
 			ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable());
 			result = new SQLResultSet(this, metaData, table);
+			log.getLogger().info("Query is successfully executed!");
 			return true;
 		}
 		REGEX = "(\\bupdate\\b)||(\\binsert\\b)||(\\bdelete\\b)";
@@ -110,6 +118,7 @@ public class SQLStatement implements Statement{
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
 			count = dbms.executeUpdateQuery(sql);
+			log.getLogger().info("Query is successfully executed!");
 			return false;
 		}
 		return false;
@@ -137,6 +146,7 @@ public class SQLStatement implements Statement{
 	public int[] executeBatch() throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		int[] counts = new int[commands.size()];
@@ -144,6 +154,7 @@ public class SQLStatement implements Statement{
 			execute(commands.get(i));
 			counts[i] = getUpdateCount();
 		}
+		log.getLogger().info("Batch is successfully executed!");
 		return counts;
 	}
 
@@ -151,11 +162,13 @@ public class SQLStatement implements Statement{
 	public ResultSet executeQuery(String sql) throws SQLException {
 		// TODO Auto-generated method stub
 		if(closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		Object[][] table = dbms.executeQuery(sql);
 		ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable());
 		ResultSet result = new SQLResultSet(this, metaData, table);
+		log.getLogger().info("Query is successfully executed!");
 		return null;
 	}
 
@@ -163,8 +176,10 @@ public class SQLStatement implements Statement{
 	public int executeUpdate(String sql) throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
+		log.getLogger().info("Query is successfully executed!");
 		return dbms.executeUpdateQuery(sql);
 	}
 
@@ -190,8 +205,10 @@ public class SQLStatement implements Statement{
 	public Connection getConnection() throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
+		log.getLogger().info("Connection successfully returned!");
 		return connection;
 	}
 
@@ -241,8 +258,10 @@ public class SQLStatement implements Statement{
 	public int getQueryTimeout() throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
+		log.getLogger().info("Timeout successfully returned!");
 		return timeOut;
 	}
 
@@ -274,8 +293,10 @@ public class SQLStatement implements Statement{
 	public int getUpdateCount() throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
+		log.getLogger().info("Update count successfully returned!");
 		return count;
 	}
 
@@ -349,8 +370,10 @@ public class SQLStatement implements Statement{
 	public void setQueryTimeout(int seconds) throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
 		timeOut = seconds;
+		log.getLogger().info("Timeout is successfully set!");
 	}
 }

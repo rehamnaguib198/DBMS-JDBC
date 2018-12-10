@@ -31,6 +31,7 @@ public class SQLResultSet implements ResultSet {
 	boolean closed;
 	Statement statement = null;
 	ResultSetMetaData metaData;
+	private Log log=new Log();
 
 	public SQLResultSet(Statement s, ResultSetMetaData m, Object[][] table) {
 		t = table.clone();
@@ -45,8 +46,10 @@ public class SQLResultSet implements ResultSet {
 	public boolean absolute(int row) throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("current row is successfully updated!");
 		if (row > 0 && row <= nuOfR) {
 			currentRow = row;
 			return true;
@@ -69,21 +72,26 @@ public class SQLResultSet implements ResultSet {
 	@Override
 	public void afterLast() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
 		currentRow = nuOfR + 1;
+		log.getLogger().info("current row is successfully updated!");
 	}
 
 	@Override
 	public void beforeFirst() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
 		currentRow = 0;
+		log.getLogger().info("current row is successfully updated!");
 	}
 
 	@Override
 	public void close() throws SQLException {
+		log.getLogger().info("Statement is closed successfully!");
 		closed = true;
 	}
 
@@ -91,136 +99,179 @@ public class SQLResultSet implements ResultSet {
 	public int findColumn(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
 		for (int i = 0; i < t[0].length; i++) {
 			// if columnLabel of i = columnLabel return i
 		}
+		log.getLogger().info("column is successfully returned!");
 		return 0;
 	}
 
 	@Override
 	public boolean first() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return absolute(1);
 	}
 
 	@Override
 	public int getInt(int columnIndex) throws SQLException {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
+			if(closed) {
+				log.getLogger().warning("Can not used closed statement");
+			}
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return (int) t[currentRow - 1][columnIndex - 1];
 	}
 
 	@Override
 	public int getInt(String columnLabel) throws SQLException {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
+			if(closed) {
+				log.getLogger().warning("Can not used closed statement");
+			}
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return (int) t[currentRow - 1][findColumn(columnLabel) - 1];
 	}
 
 	@Override
 	public ResultSetMetaData getMetaData() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("Meta data is successfully returned!");
 		return metaData;
 	}
 
 	@Override
 	public Object getObject(int columnIndex) throws SQLException {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
+			if(closed) {
+				log.getLogger().warning("Can not used closed statement");
+			}
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return t[currentRow - 1][columnIndex - 1];
 	}
 
 	@Override
 	public Statement getStatement() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("Statement is successfully returned!");
 		return statement;
 	}
 
 	@Override
 	public String getString(int columnIndex) throws SQLException {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
+			if(closed) {
+				log.getLogger().warning("Can not used closed statement");
+			}
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return t[currentRow - 1][columnIndex - 1].toString();
 	}
 
 	@Override
 	public String getString(String columnLabel) throws SQLException {
 		if (closed || currentRow == 0 || currentRow == nuOfR + 1) {
+			if(closed) {
+				log.getLogger().warning("Can not used closed statement");
+			}
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return t[currentRow - 1][findColumn(columnLabel) - 1].toString();
 	}
 
 	@Override
 	public boolean isAfterLast() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return ((currentRow == nuOfR + 1) && (nuOfR != 0));
 	}
 
 	@Override
 	public boolean isBeforeFirst() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return ((currentRow == 0) && (nuOfR != 0));
 	}
 
 	@Override
 	public boolean isClosed() throws SQLException {
+		log.getLogger().info("successfully returned!");
 		return closed;
 	}
 
 	@Override
 	public boolean isFirst() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return currentRow == 1;
 	}
 
 	@Override
 	public boolean isLast() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return currentRow == nuOfR;
 	}
 
 	@Override
 	public boolean last() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return absolute(-1);
 	}
 
 	@Override
 	public boolean next() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return absolute(currentRow + 1);
 	}
 
 	@Override
 	public boolean previous() throws SQLException {
 		if (closed) {
+			log.getLogger().warning("Can not used closed statement");
 			throw new SQLException();
 		}
+		log.getLogger().info("successfully returned!");
 		return absolute(currentRow - 1);
 	}
 

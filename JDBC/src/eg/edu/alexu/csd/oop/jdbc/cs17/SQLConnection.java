@@ -20,8 +20,9 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class SQLConnection implements Connection {
+	private Log log=new Log();
 	String path;
-
+    private boolean closed=false;
 	public SQLConnection(String path) {
 		this.path = path;
 	}
@@ -48,7 +49,8 @@ public class SQLConnection implements Connection {
 
 	@Override
 	public void close() throws SQLException {
-		throw new java.lang.UnsupportedOperationException();
+		log.getLogger().info("Connection is closed successfully!");
+		closed=true;
 	}
 
 	@Override
@@ -83,8 +85,15 @@ public class SQLConnection implements Connection {
 
 	@Override
 	public Statement createStatement() throws SQLException {
+		if(!closed) {
 		Statement statement = new SQLStatement(this);
+		log.getLogger().info("Statement created successfully!");
 		return statement;
+		}
+		else {
+		log.getLogger().warning("Can not used closed connection");
+		throw new SQLException();
+		}
 	}
 
 	@Override

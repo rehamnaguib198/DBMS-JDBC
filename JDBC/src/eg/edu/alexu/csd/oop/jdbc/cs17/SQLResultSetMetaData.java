@@ -10,6 +10,7 @@ import eg.edu.alexu.csd.oop.db.cs11.DBMS;
 
 public class SQLResultSetMetaData implements ResultSetMetaData {
 	private String tableName;
+	private Log log=new Log();
 	public SQLResultSetMetaData(String tableName) {
 		this.tableName=tableName;
 	}
@@ -42,6 +43,7 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 	public int getColumnCount() throws SQLException {
 		DBMS db=new DBMS();
 		ArrayList<String> columns=db.selectedColumns();
+		log.getLogger().info("number of columns returned successfully!");
 		return columns.size();
 	}
 
@@ -56,6 +58,7 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 		DBMS db=new DBMS();
 		ArrayList<String> columns=db.selectedColumns();
 		String columnName=columns.get(arg0);
+		log.getLogger().info("column label returned successfully!");
 		return columnName;
 	}
 
@@ -64,6 +67,7 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 		DBMS db=new DBMS();
 		ArrayList<String> columns=db.selectedColumns();
 		String columnName=columns.get(arg0);
+		log.getLogger().info("column name returned successfully!");
 		return columnName;
 	}
 
@@ -83,9 +87,11 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 		String[] arr=xsdType.split(":");
 		String type=arr[1];
 		if(type.equals("varchar")){
+			log.getLogger().info("column type returned successfully!");
 		return 12;
 		}
 		else{
+			log.getLogger().info("column type returned successfully!");
 		return 4;
 		}
 	}
@@ -117,8 +123,8 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 	@Override
 	public String getTableName(int arg0) throws SQLException {
 		// TODO Auto-generated method stub
-		//return tableName;
-		return null;
+		log.getLogger().info("table name returned successfully!");
+		return tableName;
 	}
 
 	@Override
