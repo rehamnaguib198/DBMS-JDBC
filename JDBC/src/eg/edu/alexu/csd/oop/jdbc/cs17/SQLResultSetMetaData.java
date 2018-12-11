@@ -13,7 +13,7 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 	private String tableName;
 	private Log log=new Log();
 	private Database db;
-	private ArrayList<String> columns;
+	public ArrayList<String> columns;
 
 	public SQLResultSetMetaData(String tableName, Database db) {
 		this.tableName=tableName;
