@@ -34,6 +34,7 @@ public class Main {
 						next=sc.nextLine();
 						while (!next.equals("2")) {
 							statement.addBatch(next);
+							next=sc.nextLine();
 						}
 					} else if (next.equals("3")) {
 						statement.executeBatch();
