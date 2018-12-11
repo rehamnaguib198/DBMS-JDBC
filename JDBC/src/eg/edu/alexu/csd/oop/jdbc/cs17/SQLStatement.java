@@ -107,36 +107,54 @@ public class SQLStatement implements Statement{
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
-			boolean b = dbms.executeStructureQuery(sql);
-			log.getLogger().info("Query is successfully executed!");
-			return b;
+			try {
+				boolean b = dbms.executeStructureQuery(sql);
+				log.getLogger().info("Query is successfully executed!");
+				return b;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log.getLogger().warning("SQL error!");
+				e.printStackTrace();
+			}	
 		}
 		REGEX = "\\bselect\\b";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
-			Object[][] table = dbms.executeQuery(sql);
-			if (table != null && table.length != 0) {
-				ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
-				result = new SQLResultSet(this, metaData, table);
-				log.getLogger().info("Query is successfully executed!");
-				return true;
-			} else if (table.length == 0) {
-				log.getLogger().info("Query is successfully executed!");
-			} else {
-				log.getLogger().warning("Null table!");
+			try {
+				Object[][] table = dbms.executeQuery(sql);
+				if (table != null && table.length != 0) {
+					ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
+					result = new SQLResultSet(this, metaData, table);
+					log.getLogger().info("Query is successfully executed!");
+					return true;
+				} else if (table.length == 0) {
+					log.getLogger().info("Query is successfully executed!");
+				} else {
+					log.getLogger().warning("Null table!");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log.getLogger().warning("SQL error!");
+				e.printStackTrace();
 			}
 		}
 		REGEX = "(\\bupdate\\b)|(\\binsert\\b)|(\\bdelete\\b)";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
-			count = dbms.executeUpdateQuery(sql);
-			if (count > 0) {
+			try {
+				count = dbms.executeUpdateQuery(sql);
+				if (count > 0) {
+					log.getLogger().info("Query is successfully executed!");
+					return true;
+				}
 				log.getLogger().info("Query is successfully executed!");
-				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log.getLogger().warning("SQL error!");
+				e.printStackTrace();
 			}
-			log.getLogger().info("Query is successfully executed!");
 		}
 		return false;
 	}
@@ -168,8 +186,14 @@ public class SQLStatement implements Statement{
 		}
 		int[] counts = new int[commands.size()];
 		for (int i = 0; i < commands.size(); i++) {
-			execute(commands.get(i));
-			counts[i] = getUpdateCount();
+			try {
+				execute(commands.get(i));
+				counts[i] = getUpdateCount();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log.getLogger().warning("SQL error!");
+				e.printStackTrace();
+			}
 		}
 		log.getLogger().info("Batch is successfully executed!");
 		return counts;
@@ -182,14 +206,19 @@ public class SQLStatement implements Statement{
 			log.getLogger().warning("Can not use closed statement!");
 			throw new SQLException();
 		}
-		Object[][] table = dbms.executeQuery(sql);
-		if (table != null) {
-			ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
-			result = new SQLResultSet(this, metaData, table);
-			log.getLogger().info("Query is successfully executed!");
-			return result;
-		} else {
-			log.getLogger().warning("Null table!");
+		try {
+			Object[][] table = dbms.executeQuery(sql);
+			if (table != null) {
+				ResultSetMetaData metaData = new SQLResultSetMetaData(dbms.getTable(), dbms);
+				result = new SQLResultSet(this, metaData, table);
+				log.getLogger().info("Query is successfully executed!");
+				return result;
+			} else {
+				log.getLogger().warning("Null table!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
