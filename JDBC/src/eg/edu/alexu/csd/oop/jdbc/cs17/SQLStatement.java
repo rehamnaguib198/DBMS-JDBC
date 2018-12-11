@@ -107,15 +107,15 @@ public class SQLStatement implements Statement{
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(sql);
 		if(matcher.find()) {
-			try {
+			//try {
 				boolean b = dbms.executeStructureQuery(sql);
 				log.getLogger().info("Query is successfully executed!");
 				return b;
-			} catch (SQLException e) {
+			/*} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				log.getLogger().warning("SQL error!");
 				e.printStackTrace();
-			}	
+			}	*/
 		}
 		REGEX = "\\bselect\\b";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
