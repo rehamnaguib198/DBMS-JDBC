@@ -294,6 +294,7 @@ public class ExecuteVisitor implements Visitor {
 				}
 			}
 			changedRows = files.insertIntoTable(table, map);
+			System.out.println("Changed rows = " + changedRows);
 			// changedRows = 1;
 
 		}
@@ -400,6 +401,7 @@ public class ExecuteVisitor implements Visitor {
 					}
 					try {
 						changedRows += files.updateTable(table, map, conditions, operator);
+						System.out.println("Changed rows = " + changedRows);
 					} catch (ParserConfigurationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -434,7 +436,7 @@ public class ExecuteVisitor implements Visitor {
 					}
 					try {
 						changedRows += files.updateTable(table, map, conditions, operator);
-						System.out.println(changedRows);
+						System.out.println("Changed rows = " + changedRows);
 					} catch (ParserConfigurationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -469,6 +471,7 @@ public class ExecuteVisitor implements Visitor {
 					}
 					try {
 						changedRows = files.updateTable(table, map, conditions, operator);
+						System.out.println("Changed rows = " + changedRows);
 					} catch (ParserConfigurationException | SAXException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -517,6 +520,7 @@ public class ExecuteVisitor implements Visitor {
 				}
 				try {
 					changedRows = files.updateTable(table, map, conditions, operator);
+					System.out.println("Changed rows = " + changedRows);
 				} catch (ParserConfigurationException | SAXException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -574,6 +578,7 @@ public class ExecuteVisitor implements Visitor {
 				}
 				try {
 					changedRows = files.deleteFromTable(table, conditions, operator);
+					System.out.println("Changed rows = " + changedRows);
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -609,6 +614,7 @@ public class ExecuteVisitor implements Visitor {
 				}
 				try {
 					changedRows = files.deleteFromTable(table, conditions, operator);
+					System.out.println("Changed rows = " + changedRows);
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -645,6 +651,7 @@ public class ExecuteVisitor implements Visitor {
 				}
 				try {
 					changedRows = files.deleteFromTable(table, conditions, operator);
+					System.out.println("Changed rows = " + changedRows);
 				} catch (ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -677,6 +684,7 @@ public class ExecuteVisitor implements Visitor {
 			}
 			try {
 				changedRows = files.deleteFromTable(table, conditions, operator);
+				System.out.println("Changed rows = " + changedRows);
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

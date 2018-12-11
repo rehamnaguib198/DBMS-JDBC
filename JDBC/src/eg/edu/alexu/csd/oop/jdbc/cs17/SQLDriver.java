@@ -6,6 +6,7 @@ import java.sql.Driver;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -57,7 +58,13 @@ public class SQLDriver implements Driver {
 
 	@Override
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
-		throw new java.lang.UnsupportedOperationException();
+		DriverPropertyInfo[] arr=new DriverPropertyInfo[info.size()];
+		int i=0;
+		for(Entry entry:info.entrySet()) {
+			arr[i]=(DriverPropertyInfo) entry.getValue();
+			i++;
+		}
+		return arr;
 	}
 
 	@Override
