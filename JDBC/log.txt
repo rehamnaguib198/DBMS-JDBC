@@ -1,0 +1,6 @@
+Dec 11, 2018 6:19:53 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLDriver acceptsURL
+INFO: Url accepted
+Dec 11, 2018 6:19:54 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLDriver connect
+INFO: Connection returned successfully!
+Dec 11, 2018 6:19:54 PM eg.edu.alexu.csd.oop.jdbc.cs17.SQLConnection createStatement
+INFO: Statement created successfully!
