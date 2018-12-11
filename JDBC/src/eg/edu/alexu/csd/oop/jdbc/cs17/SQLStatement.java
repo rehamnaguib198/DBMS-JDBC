@@ -101,6 +101,7 @@ public class SQLStatement implements Statement{
 		if (matcher.find() && matcher.start() == 0 && matcher.end() == sql.length()) {
 			String name = sql.substring(16, sql.length());
 			dbms.createDatabase("sample" + System.getProperty("file.separator") + name, false);
+			return true;
 		}
 		REGEX = "(\\bcreate\\b)|(\\bdrop\\b)";
 		pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
