@@ -13,10 +13,12 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 	private String tableName;
 	private Log log=new Log();
 	private Database db;
+	private ArrayList<String> columns;
 
 	public SQLResultSetMetaData(String tableName, Database db) {
 		this.tableName=tableName;
 		this.db = db;
+		columns=db.selectedColumns();
 	}
 
 	@Override
@@ -69,7 +71,6 @@ public class SQLResultSetMetaData implements ResultSetMetaData {
 
 	@Override
 	public int getColumnType(int arg0) throws SQLException {
-		ArrayList<String> columns=db.selectedColumns();
 		String columnName=columns.get(arg0);
 		HashMap<String,String> xsdMap=new HashMap<>();
 		xsdMap=db.getXSDMap(tableName);
